@@ -1,1 +1,29 @@
-spring.application.name=backend
+spring:
+  # Datasource configuration
+  # The following variable should be set in the prod environment
+  # DATABASE_URL (default: localhost),
+  # DATABASE_PORT (default: 3306),
+  # DATABASE_USERNAME (default: root),
+  # DATABASE_PASSWORD (default: secret)
+  # DATABASE_NAME (default: tradingapp)
+  datasource:
+    url: jdbc:mysql://${DATABASE_URL:localhost}:${DATABASE_PORT:3306}/${DATABASE_NAME:tradingapp}?createDatabaseIfNotExist=true
+    username: ${DATABASE_USERNAME:root}
+    password: ${DATABASE_PASSWORD:secret}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      mode: always
+      schema-locations: "classpath:dbinit.sql"
+
+logging:
+  level:
+    # Incoming HTTP requests
+    org.apache.coyote.http11.Http11InputBuffer: TRACE
+    org.springframework.jdbc.core: TRACE
+    org.springframework.jdbc.datasource.init: TRACE
+
+
+server:
+  # HTTP port (default: 8080)
+  port: 8080
