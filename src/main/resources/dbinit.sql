@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS "transactions";
 
 CREATE TABLE "users"
 (
-    "id"         uuid PRIMARY KEY   NOT NULL                                 DEFAULT (uuid_generate_v4()),
+    "id"         uuid PRIMARY KEY   NOT NULL,
     "username"   varchar(50) UNIQUE NOT NULL,
     "first_name" varchar(255)       NOT NULL,
     "last_name"  varchar(255)       NOT NULL,
@@ -16,10 +16,10 @@ CREATE TABLE "users"
 
 CREATE TABLE "items"
 (
-    "id"          uuid PRIMARY KEY NOT NULL                                   DEFAULT (uuid_generate_v4()),
+    "id"          uuid PRIMARY KEY NOT NULL,
     "user_id"     uuid             NOT NULL,
     "name"        varchar(255)     NOT NULL,
-    "price" double NOT NULL,
+    "price"       double precision NOT NULL,
     "description" varchar(255),
     "media_urls"  varchar(255)[],
     "on_sale"     smallint         NOT NULL CHECK (available BETWEEN 0 AND 1) DEFAULT 1,
@@ -29,7 +29,7 @@ CREATE TABLE "items"
 
 CREATE TABLE "transactions"
 (
-    "id"                     uuid PRIMARY KEY NOT NULL                                                DEFAULT (uuid_generate_v4()),
+    "id"                     uuid PRIMARY KEY NOT NULL,
     "item_id"                uuid             NOT NULL,
     "buyer_id"               uuid             NOT NULL,
     "seller_id"              uuid             NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE "transactions"
 );
 
 ALTER TABLE "items"
-    ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE;
+    ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
 ALTER TABLE "transactions"
     ADD FOREIGN KEY ("item_id") REFERENCES "items" ("id");
