@@ -5,9 +5,9 @@ spring:
   # DATABASE_PORT (default: 3306),
   # DATABASE_USERNAME (default: root),
   # DATABASE_PASSWORD (default: secret)
-  # DATABASE_NAME (default: tradingapp)
+  # DATABASE_NAME (default: postgres)
   datasource:
-    url: jdbc:postgresql://${DATABASE_URL:localhost}:${DATABASE_PORT:5432}/postgres
+    url: jdbc:postgresql://${DATABASE_URL:localhost}:${DATABASE_PORT:5432}/${DATABASE_NAME:postgres}
     username: ${DATABASE_USERNAME:postgres}
     password: ${DATABASE_PASSWORD:secret}
     driver-class-name: org.postgresql.Driver
