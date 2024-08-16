@@ -7,10 +7,10 @@ spring:
   # DATABASE_PASSWORD (default: secret)
   # DATABASE_NAME (default: tradingapp)
   datasource:
-    url: jdbc:mysql://${DATABASE_URL:localhost}:${DATABASE_PORT:3306}/${DATABASE_NAME:tradingapp}?createDatabaseIfNotExist=true
-    username: ${DATABASE_USERNAME:root}
+    url: jdbc:postgresql://${DATABASE_URL:localhost}:${DATABASE_PORT:5432}/postgres
+    username: ${DATABASE_USERNAME:postgres}
     password: ${DATABASE_PASSWORD:secret}
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: org.postgresql.Driver
   sql:
     init:
       mode: always
