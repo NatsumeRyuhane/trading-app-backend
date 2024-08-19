@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,7 +18,10 @@ import java.util.UUID;
 public class ItemController {
     private final ItemService itemService;
 
-    @GetMapping("/")
+    // TODO: Replace hard-coded user with authed user
+    private final UserEntity user = new UserEntity(UUID.fromString("e18452c5-c2d0-492f-b53f-a62121adc466"), "stevenysy", "secret", "steven", "yi", "123 Main Street", true, LocalDateTime.now());
+
+    @GetMapping
     public List<ItemEntity> getAllItemsAvailable() {
         return itemService.getAllItems()
                 .stream()
@@ -26,7 +30,8 @@ public class ItemController {
     }
 
     // TODO: Implement this endpoint after the authentication module is implemented
-    public List<ItemEntity> getItemListing(@AuthenticationPrincipal UserEntity user) {
+    @GetMapping("/mine")
+    public List<ItemEntity> getItemListing() {
         return itemService.getAllItems()
                 .stream()
                 .filter(item -> item.getUserId().equals(user.getId()))
@@ -34,13 +39,13 @@ public class ItemController {
     }
 
     @GetMapping("/search")
-    public List<ItemEntity> searchItems(String query) {
-        return itemService.searchItemsByName(query);
+    public List<ItemEntity> searchItems(@RequestParam String name) {
+        return itemService.searchItemsByName(name);
     }
 
-    @PostMapping("/")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void postItem(@AuthenticationPrincipal UserEntity user,  @RequestBody ItemPublishRequest body) {
+    public void postItem(@RequestBody ItemPublishRequest body) {
         itemService.createItem(
                 user.getId(),
                 body.name(),
@@ -53,7 +58,7 @@ public class ItemController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteItem(@AuthenticationPrincipal UserEntity user, @PathVariable String id) {
+    public void deleteItem(@PathVariable String id) {
         itemService.deleteItem(user.getId(), UUID.fromString(id));
     }
 }

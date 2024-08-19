@@ -33,7 +33,7 @@ public class ItemService {
         return itemRepository.findAllByNameContaining(query);
     }
 
-    public ItemEntity createItem(
+    public void createItem(
             UUID userId,
             String name,
             double price,
@@ -54,18 +54,16 @@ public class ItemService {
                 LocalDateTime.now(),
                 address
         );
-        return itemRepository.save(itemEntity);
+        itemRepository.save(itemEntity);
     }
 
 
     public void deleteItem(UUID userId, UUID itemId) {
-        if (itemRepository.existsById(itemId)) {
-            ItemEntity itemEntity = itemRepository.findById(itemId).get();
-            if (itemEntity.getUserId().equals(userId)) {
-                itemRepository.deleteById(itemId);
-            } else {
-                throw new ItemOperationUnauthorizedException("Unable to delete item: User does not own item");
-            }
+        ItemEntity itemEntity = itemRepository.findById(itemId).get();
+        if (itemEntity.getUserId().equals(userId)) {
+            itemRepository.deleteById(itemId);
+        } else {
+            throw new ItemOperationUnauthorizedException("Unable to delete item: User does not own item");
         }
     }
 }
