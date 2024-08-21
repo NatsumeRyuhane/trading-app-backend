@@ -38,7 +38,7 @@ public class ItemService {
             String name,
             double price,
             String description,
-            String mediaUrls,
+            List<String> mediaUrls,
             ItemStatusEnum status,
             String address
     ) {
@@ -51,7 +51,6 @@ public class ItemService {
                 description,
                 mediaUrls,
                 status,
-                LocalDateTime.now(),
                 address
         );
         itemRepository.save(itemEntity);

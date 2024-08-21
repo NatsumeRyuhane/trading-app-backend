@@ -35,9 +35,7 @@ public class UserService {
                 password,
                 firstName,
                 lastName,
-                address,
-                true,
-                LocalDateTime.now()
+                address
         );
         return userRepository.save(userEntity);
     }
