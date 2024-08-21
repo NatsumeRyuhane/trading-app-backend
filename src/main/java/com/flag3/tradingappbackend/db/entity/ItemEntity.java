@@ -35,7 +35,6 @@ public class ItemEntity {
     @Column(name = "media_urls")
     private List<String> mediaUrls;
 
-
     @Column(nullable = false)
     private ItemStatusEnum status = ItemStatusEnum.AVAILABLE;
 

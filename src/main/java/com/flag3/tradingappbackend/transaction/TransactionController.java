@@ -1,7 +1,7 @@
 package com.flag3.tradingappbackend.transaction;
 
 import com.flag3.tradingappbackend.db.entity.TransactionEntity;
-import com.flag3.tradingappbackend.db.enums.TranscationStatusEnum;
+import com.flag3.tradingappbackend.db.enums.TransactionStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,37 +57,37 @@ public class TransactionController {
     }
 
     @GetMapping("/status/{status}")
-    public List<TransactionEntity> getTransactionsByStatus(@PathVariable TranscationStatusEnum status) {
+    public List<TransactionEntity> getTransactionsByStatus(@PathVariable TransactionStatusEnum status) {
         return transactionService.getTransactionsByStatus(status);
     }
 
     @PatchMapping("/{id}/status")
-    public ResponseEntity<Void> updateStatus(@PathVariable UUID id, @RequestParam TranscationStatusEnum status) {
+    public ResponseEntity<Void> updateStatus(@PathVariable UUID id, @RequestParam TransactionStatusEnum status) {
         transactionService.updateStatus(id, status);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{id}/shipped")
     public ResponseEntity<Void> updateShippedAt(@PathVariable UUID id, @RequestParam LocalDateTime timeValue) {
-        transactionService.updateShippedAt(id, timeValue, TranscationStatusEnum.SHIPPED);
+        transactionService.updateShippedAt(id, timeValue, TransactionStatusEnum.SHIPPED);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{id}/delivered")
     public ResponseEntity<Void> updateDeliveredAt(@PathVariable UUID id, @RequestParam LocalDateTime timeValue) {
-        transactionService.updateDeliveredAt(id, timeValue, TranscationStatusEnum.DELIVERED);
+        transactionService.updateDeliveredAt(id, timeValue, TransactionStatusEnum.DELIVERED);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{id}/confirmed")
     public ResponseEntity<Void> updateConfirmedAt(@PathVariable UUID id, @RequestParam LocalDateTime timeValue) {
-        transactionService.updateConfirmedAt(id, timeValue, TranscationStatusEnum.CONFIRMED);
+        transactionService.updateConfirmedAt(id, timeValue, TransactionStatusEnum.CONFIRMED);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{id}/canceled")
     public ResponseEntity<Void> updateCanceledAt(@PathVariable UUID id, @RequestParam LocalDateTime timeValue) {
-        transactionService.updateCanceledAt(id, timeValue, TranscationStatusEnum.CANCELED);
+        transactionService.updateCanceledAt(id, timeValue, TransactionStatusEnum.CANCELED);
         return ResponseEntity.ok().build();
     }
 }

@@ -2,7 +2,7 @@ package com.flag3.tradingappbackend.db;
 
 
 import com.flag3.tradingappbackend.db.entity.TransactionEntity;
-import com.flag3.tradingappbackend.db.enums.TranscationStatusEnum;
+import com.flag3.tradingappbackend.db.enums.TransactionStatusEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -26,13 +26,13 @@ public interface TransactionRepository extends JpaRepository<TransactionEntity, 
     List<TransactionEntity> findAllByBuyerId(UUID buyerId);
     List<TransactionEntity> findAllByItemId(UUID itemId);
 
-    List<TransactionEntity> findAllByStatus(TranscationStatusEnum statusEnum);
+    List<TransactionEntity> findAllByStatus(TransactionStatusEnum statusEnum);
 
 
     @Modifying
     @Transactional
     @Query("UPDATE TransactionEntity t SET t.status = :status WHERE t.id = :id")
-    int updateStatus(UUID id, TranscationStatusEnum status );
+    int updateStatus(UUID id, TransactionStatusEnum status );
 
     @Modifying
     @Transactional

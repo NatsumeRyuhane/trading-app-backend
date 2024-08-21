@@ -5,7 +5,7 @@ import com.flag3.tradingappbackend.db.TransactionRepository;
 import com.flag3.tradingappbackend.db.entity.ItemEntity;
 import com.flag3.tradingappbackend.db.entity.TransactionEntity;
 import com.flag3.tradingappbackend.db.enums.ItemStatusEnum;
-import com.flag3.tradingappbackend.db.enums.TranscationStatusEnum;
+import com.flag3.tradingappbackend.db.enums.TransactionStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,14 +42,7 @@ public class TransactionService {
                 itemId,                        // Associated item ID
                 buyerId,                       // Buyer ID
                 sellerId,                      // Seller ID
-                TranscationStatusEnum.PENDING, // Initial status
-                -1,                             // Initial buyer to seller rating
-                -1,                             // Initial seller to buyer rating
-                LocalDateTime.now(),           // Created at timestamp
-                null,                          // Shipped at (not shipped yet)
-                null,                          // Delivered at (not delivered yet)
-                null,                          // Confirmed at (not confirmed yet)
-                null                           // Canceled at (not canceled yet)
+                TransactionStatusEnum.PENDING // Initial status
         );
 
         // Save the transaction to the database
@@ -73,29 +66,29 @@ public class TransactionService {
         return transactionRepository.findAllByItemId(itemId);
     }
 
-    public List<TransactionEntity> getTransactionsByStatus(TranscationStatusEnum statusEnum) {
+    public List<TransactionEntity> getTransactionsByStatus(TransactionStatusEnum statusEnum) {
         return transactionRepository.findAllByStatus(statusEnum);
     }
-    public void updateStatus(UUID id, TranscationStatusEnum status) {
+    public void updateStatus(UUID id, TransactionStatusEnum status) {
         transactionRepository.updateStatus(id, status);
     }
 
-    public void updateShippedAt(UUID id, LocalDateTime timeValue, TranscationStatusEnum status) {
+    public void updateShippedAt(UUID id, LocalDateTime timeValue, TransactionStatusEnum status) {
         transactionRepository.updateShippedAt(id, timeValue);
         transactionRepository.updateStatus(id, status);
     }
 
-    public void updateDeliveredAt(UUID id, LocalDateTime timeValue, TranscationStatusEnum status) {
+    public void updateDeliveredAt(UUID id, LocalDateTime timeValue, TransactionStatusEnum status) {
         transactionRepository.updateDeliveredAt(id, timeValue);
         transactionRepository.updateStatus(id, status);
     }
 
-    public void updateConfirmedAt(UUID id, LocalDateTime timeValue, TranscationStatusEnum status) {
+    public void updateConfirmedAt(UUID id, LocalDateTime timeValue, TransactionStatusEnum status) {
         transactionRepository.updateConfirmedAt(id, timeValue);
         transactionRepository.updateStatus(id, status);
     }
 
-    public void updateCanceledAt(UUID id, LocalDateTime timeValue, TranscationStatusEnum status) {
+    public void updateCanceledAt(UUID id, LocalDateTime timeValue, TransactionStatusEnum status) {
         transactionRepository.updateCanceledAt(id, timeValue);
         transactionRepository.updateStatus(id, status);
     }
