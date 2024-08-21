@@ -9,6 +9,8 @@ import org.hibernate.annotations.GenericGenerator;
 import com.flag3.tradingappbackend.db.enums.TransactionStatusEnum;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 
 @Entity
 @Table(name = "transactions")
@@ -41,9 +43,13 @@ public class TransactionEntity {
     private TransactionStatusEnum status;
 
     @Column(name = "buyer_to_seller_rating")
+    @Min(1)
+    @Max(5)
     private Integer buyerToSellerRating;
 
     @Column(name = "seller_to_buyer_rating")
+    @Min(1)
+    @Max(5)
     private Integer sellerToBuyerRating;
 
     @CreationTimestamp
