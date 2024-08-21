@@ -30,6 +30,7 @@ public class ItemController {
     }
 
     // TODO: Implement this endpoint after the authentication module is implemented
+    // TODO: Replace ItemEntity with ItemDTO
     @GetMapping("/mine")
     public List<ItemEntity> getItemListing() {
         return itemService.getAllItems()

@@ -3,6 +3,7 @@ package com.flag3.tradingappbackend.db.entity;
 import com.flag3.tradingappbackend.db.enums.ItemStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -38,8 +39,9 @@ public class ItemEntity {
     @Column(nullable = false)
     private ItemStatusEnum status = ItemStatusEnum.AVAILABLE;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(name = "created_at", nullable = false, updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     @Column
     private String address;
@@ -65,7 +67,6 @@ public class ItemEntity {
         this.description = description;
         this.mediaUrls = mediaUrls;
         this.status = status;
-        this.createdAt = LocalDateTime.now();
         this.address = address;
     }
 }
