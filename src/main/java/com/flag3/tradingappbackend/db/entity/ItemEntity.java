@@ -3,6 +3,7 @@ package com.flag3.tradingappbackend.db.entity;
 import com.flag3.tradingappbackend.db.enums.ItemStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,7 +12,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "items")
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @EqualsAndHashCode
 @ToString
@@ -31,9 +31,8 @@ public class ItemEntity {
     @Column
     private String description;
 
-    // TODO: Add support for multi-media files
     @Column(name = "media_urls")
-    private String mediaUrls;
+    private List<String> mediaUrls;
 
 
     @Column(nullable = false)
@@ -44,4 +43,29 @@ public class ItemEntity {
 
     @Column
     private String address;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_item_user"), insertable = false, updatable = false)
+    private UserEntity user;
+
+    public ItemEntity(
+            UUID id,
+            UUID userId,
+            String name,
+            double price,
+            String description,
+            List<String> mediaUrls,
+            ItemStatusEnum status,
+            String address
+    ) {
+        this.id = id;
+        this.userId = userId;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.mediaUrls = mediaUrls;
+        this.status = status;
+        this.createdAt = LocalDateTime.now();
+        this.address = address;
+    }
 }
