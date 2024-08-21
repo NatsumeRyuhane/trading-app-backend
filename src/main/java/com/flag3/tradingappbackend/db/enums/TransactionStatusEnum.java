@@ -1,6 +1,6 @@
 package com.flag3.tradingappbackend.db.enums;
 
-public enum TranscationStatusEnum {
+public enum TransactionStatusEnum {
     PENDING,          // The transaction has been created but not yet processed
     APPROVED,         // The transaction has been approved and is ready to be processed
     SHIPPED,          // The item has been shipped to the buyer
