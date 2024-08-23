@@ -2,6 +2,7 @@ package com.flag3.tradingappbackend.transaction;
 
 import com.flag3.tradingappbackend.db.entity.TransactionEntity;
 import com.flag3.tradingappbackend.db.enums.TransactionStatusEnum;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,22 +14,18 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/transactions")
+@AllArgsConstructor
 public class TransactionController {
 
     private final TransactionService transactionService;
-
-    @Autowired
-    public TransactionController(TransactionService transactionService) {
-        this.transactionService = transactionService;
-    }
 
     @PostMapping
     public ResponseEntity<TransactionEntity> addTransaction(
             @RequestParam UUID buyerId,
             @RequestParam UUID sellerId,
-            @RequestParam UUID itemId,
-            @RequestParam double amount) {
-        TransactionEntity createdTransaction = transactionService.createTransaction(buyerId, sellerId, itemId, amount);
+            @RequestParam UUID itemId
+    ) {
+        TransactionEntity createdTransaction = transactionService.createTransaction(buyerId, sellerId, itemId);
         return ResponseEntity.ok(createdTransaction);
     }
 

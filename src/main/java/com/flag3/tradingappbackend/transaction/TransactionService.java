@@ -26,7 +26,7 @@ public class TransactionService {
         this.itemRepository = itemRepository;
     }
 
-    public TransactionEntity createTransaction(UUID buyerId, UUID sellerId, UUID itemId, double amount) {
+    public TransactionEntity createTransaction(UUID buyerId, UUID sellerId, UUID itemId) {
         // Fetch the item to ensure it exists and is valid for a transaction
         ItemEntity item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new TransactionItemInvalidException("Item not found or is no longer available"));
