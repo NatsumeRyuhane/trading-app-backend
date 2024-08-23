@@ -18,9 +18,6 @@ import java.util.UUID;
 public class ItemController {
     private final ItemService itemService;
 
-    // TODO: Replace hard-coded user with authed user
-    private final UserEntity user = new UserEntity(UUID.fromString("e18452c5-c2d0-492f-b53f-a62121adc466"), "stevenysy", "secret", "steven", "yi", "123 Main Street", true, LocalDateTime.now());
-
     @GetMapping
     public List<ItemEntity> getAllItemsAvailable() {
         return itemService.getAllItems()
@@ -29,10 +26,9 @@ public class ItemController {
                 .toList();
     }
 
-    // TODO: Implement this endpoint after the authentication module is implemented
     // TODO: Replace ItemEntity with ItemDTO
     @GetMapping("/mine")
-    public List<ItemEntity> getItemListing() {
+    public List<ItemEntity> getItemListing(@AuthenticationPrincipal UserEntity user) {
         return itemService.getAllItems()
                 .stream()
                 .filter(item -> item.getUserId().equals(user.getId()))
@@ -46,7 +42,7 @@ public class ItemController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void postItem(@RequestBody ItemPublishRequest body) {
+    public void postItem(@AuthenticationPrincipal UserEntity user, @RequestBody ItemPublishRequest body) {
         itemService.createItem(
                 user.getId(),
                 body.name(),
@@ -59,7 +55,7 @@ public class ItemController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteItem(@PathVariable String id) {
+    public void deleteItem(@AuthenticationPrincipal UserEntity user, @PathVariable String id) {
         itemService.deleteItem(user.getId(), UUID.fromString(id));
     }
 }

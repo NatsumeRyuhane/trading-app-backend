@@ -25,16 +25,16 @@ public class DevelopmentTester implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        userRepository.save(new UserEntity(
-                UUID.fromString("e18452c5-c2d0-492f-b53f-a62121adc466"),
-                "stevenysy",
-                "secret",
-                "steven",
-                "yi",
-                "123 Main Street",
-                true,
-                LocalDateTime.now()
-        ));
+//        userRepository.save(new UserEntity(
+//                UUID.fromString("e18452c5-c2d0-492f-b53f-a62121adc466"),
+//                "stevenysy",
+//                "secret",
+//                "steven",
+//                "yi",
+//                "123 Main Street",
+//                true,
+//                LocalDateTime.now()
+//        ));
     }
 
 }
