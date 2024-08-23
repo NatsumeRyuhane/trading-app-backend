@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/transactions")
+@RequestMapping("/transactions")
 public class TransactionController {
 
     private final TransactionService transactionService;
@@ -21,7 +21,6 @@ public class TransactionController {
     public TransactionController(TransactionService transactionService) {
         this.transactionService = transactionService;
     }
-
 
     @PostMapping
     public ResponseEntity<TransactionEntity> addTransaction(
@@ -39,7 +38,6 @@ public class TransactionController {
         return transaction.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-
 
     @GetMapping("/seller/{sellerId}")
     public List<TransactionEntity> getTransactionsBySellerId(@PathVariable UUID sellerId) {
