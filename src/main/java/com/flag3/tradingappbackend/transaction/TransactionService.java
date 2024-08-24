@@ -6,6 +6,7 @@ import com.flag3.tradingappbackend.db.entity.ItemEntity;
 import com.flag3.tradingappbackend.db.entity.TransactionEntity;
 import com.flag3.tradingappbackend.db.enums.ItemStatusEnum;
 import com.flag3.tradingappbackend.db.enums.TransactionStatusEnum;
+import com.flag3.tradingappbackend.exceptions.TransactionItemInvalidException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +46,9 @@ public class TransactionService {
                 TransactionStatusEnum.PENDING  // Initial status
         );
 
+        // Update the item status to SOLD so no more transactions can be created with the item
+        itemRepository.updateStatus(itemId, ItemStatusEnum.SOLD);
+
         // Save the transaction to the database
         return transactionRepository.save(transactionEntity);
     }
@@ -73,23 +77,27 @@ public class TransactionService {
         transactionRepository.updateStatus(id, status);
     }
 
-    public void updateShippedAt(UUID id, LocalDateTime timeValue, TransactionStatusEnum status) {
-        transactionRepository.updateShippedAt(id, timeValue);
-        transactionRepository.updateStatus(id, status);
+    public void updateShipped(UUID id) {
+        transactionRepository.updateShippedAt(id, LocalDateTime.now());
+        transactionRepository.updateStatus(id, TransactionStatusEnum.SHIPPED);
     }
 
-    public void updateDeliveredAt(UUID id, LocalDateTime timeValue, TransactionStatusEnum status) {
-        transactionRepository.updateDeliveredAt(id, timeValue);
-        transactionRepository.updateStatus(id, status);
+    public void updateDelivered(UUID id) {
+        transactionRepository.updateDeliveredAt(id, LocalDateTime.now());
+        transactionRepository.updateStatus(id, TransactionStatusEnum.DELIVERED);
     }
 
-    public void updateConfirmedAt(UUID id, LocalDateTime timeValue, TransactionStatusEnum status) {
-        transactionRepository.updateConfirmedAt(id, timeValue);
-        transactionRepository.updateStatus(id, status);
+    public void updateConfirmed(UUID id) {
+        transactionRepository.updateConfirmedAt(id, LocalDateTime.now());
+        transactionRepository.updateStatus(id, TransactionStatusEnum.CONFIRMED);
     }
 
-    public void updateCanceledAt(UUID id, LocalDateTime timeValue, TransactionStatusEnum status) {
-        transactionRepository.updateCanceledAt(id, timeValue);
-        transactionRepository.updateStatus(id, status);
+    public void updateCanceled(UUID id) {
+        transactionRepository.updateCanceledAt(id, LocalDateTime.now());
+        transactionRepository.updateStatus(id, TransactionStatusEnum.CANCELED);
+
+        // Set the status of the item back to AVAILABLE after cancellation
+        TransactionEntity transaction = transactionRepository.getReferenceById(id);
+        itemRepository.updateStatus(transaction.getItemId(), ItemStatusEnum.AVAILABLE);
     }
 }

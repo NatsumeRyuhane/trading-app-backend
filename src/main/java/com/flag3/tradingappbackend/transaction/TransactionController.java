@@ -4,7 +4,6 @@ import com.flag3.tradingappbackend.db.entity.TransactionEntity;
 import com.flag3.tradingappbackend.db.entity.UserEntity;
 import com.flag3.tradingappbackend.db.enums.TransactionStatusEnum;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -66,27 +65,29 @@ public class TransactionController {
         return ResponseEntity.ok().build();
     }
 
+    // I moved the timestamp and the status into the service
     @PatchMapping("/{id}/shipped")
-    public ResponseEntity<Void> updateShippedAt(@PathVariable UUID id, @RequestParam LocalDateTime timeValue) {
-        transactionService.updateShippedAt(id, timeValue, TransactionStatusEnum.SHIPPED);
+    public ResponseEntity<Void> updateShipped(@PathVariable UUID id) {
+        transactionService.updateShipped(id);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{id}/delivered")
-    public ResponseEntity<Void> updateDeliveredAt(@PathVariable UUID id, @RequestParam LocalDateTime timeValue) {
-        transactionService.updateDeliveredAt(id, timeValue, TransactionStatusEnum.DELIVERED);
+    public ResponseEntity<Void> updateDelivered(@PathVariable UUID id) {
+        transactionService.updateDelivered(id);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{id}/confirmed")
-    public ResponseEntity<Void> updateConfirmedAt(@PathVariable UUID id, @RequestParam LocalDateTime timeValue) {
-        transactionService.updateConfirmedAt(id, timeValue, TransactionStatusEnum.CONFIRMED);
+    public ResponseEntity<Void> updateConfirmedAt(@PathVariable UUID id) {
+        transactionService.updateConfirmed(id);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{id}/canceled")
-    public ResponseEntity<Void> updateCanceledAt(@PathVariable UUID id, @RequestParam LocalDateTime timeValue) {
-        transactionService.updateCanceledAt(id, timeValue, TransactionStatusEnum.CANCELED);
+    public ResponseEntity<Void> updateCanceledAt(@PathVariable UUID id) {
+        transactionService.updateCanceled(id);
         return ResponseEntity.ok().build();
     }
+
 }
