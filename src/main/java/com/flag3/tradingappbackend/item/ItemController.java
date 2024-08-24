@@ -1,5 +1,6 @@
 package com.flag3.tradingappbackend.item;
 
+import com.flag3.tradingappbackend.db.dto.ItemDto;
 import com.flag3.tradingappbackend.db.entity.ItemEntity;
 import com.flag3.tradingappbackend.db.entity.UserEntity;
 import com.flag3.tradingappbackend.db.enums.ItemStatusEnum;
@@ -16,27 +17,21 @@ import java.util.UUID;
 @RequestMapping("/items")
 @AllArgsConstructor
 public class ItemController {
+
     private final ItemService itemService;
 
     @GetMapping
-    public List<ItemEntity> getAllItemsAvailable() {
-        return itemService.getAllItems()
-                .stream()
-                .filter(item -> item.getStatus().equals(ItemStatusEnum.AVAILABLE))
-                .toList();
+    public List<ItemDto> getAllAvailableItems() {
+        return itemService.getAllAvailableItems();
     }
 
-    // TODO: Replace ItemEntity with ItemDTO
     @GetMapping("/mine")
-    public List<ItemEntity> getItemListing(@AuthenticationPrincipal UserEntity user) {
-        return itemService.getAllItems()
-                .stream()
-                .filter(item -> item.getUserId().equals(user.getId()))
-                .toList();
+    public List<ItemDto> getAllItemsOfCurrentUser(@AuthenticationPrincipal UserEntity user) {
+        return itemService.getAllItemsOfUser(user.getId());
     }
 
     @GetMapping("/search")
-    public List<ItemEntity> searchItems(@RequestParam String name) {
+    public List<ItemDto> searchItems(@RequestParam String name) {
         return itemService.searchItemsByName(name);
     }
 
