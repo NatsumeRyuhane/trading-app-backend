@@ -1,9 +1,6 @@
 package com.flag3.tradingappbackend;
 
-import com.flag3.tradingappbackend.exceptions.ErrorResponse;
-import com.flag3.tradingappbackend.exceptions.ItemOperationUnauthorizedException;
-import com.flag3.tradingappbackend.exceptions.TransactionItemInvalidException;
-import com.flag3.tradingappbackend.exceptions.UserAlreadyExistsException;
+import com.flag3.tradingappbackend.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -33,6 +30,14 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(
                 new ErrorResponse(ex.getMessage(), ex.toString()),
                 HttpStatus.UNAUTHORIZED
+        );
+    }
+
+    @ExceptionHandler(AssetDoesNotExistException.class)
+    public ResponseEntity<ErrorResponse> handleAssetDoesNotExistException(AssetDoesNotExistException ex) {
+        return new ResponseEntity<>(
+                new ErrorResponse(ex.getMessage(), ex.toString()),
+                HttpStatus.NOT_FOUND
         );
     }
 

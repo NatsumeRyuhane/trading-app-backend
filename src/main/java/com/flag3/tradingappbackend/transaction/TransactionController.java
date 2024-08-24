@@ -1,9 +1,11 @@
 package com.flag3.tradingappbackend.transaction;
 
+import com.flag3.tradingappbackend.db.dto.TransactionDto;
 import com.flag3.tradingappbackend.db.entity.TransactionEntity;
 import com.flag3.tradingappbackend.db.entity.UserEntity;
 import com.flag3.tradingappbackend.db.enums.TransactionStatusEnum;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -21,41 +23,39 @@ public class TransactionController {
     private final TransactionService transactionService;
 
     @PostMapping
-    public ResponseEntity<TransactionEntity> addTransaction(
+    public ResponseEntity<Void> addTransaction(
             @AuthenticationPrincipal UserEntity buyer,  // This is because a transaction is always initiated by a buyer that is logged in
             @RequestParam UUID sellerId,
             @RequestParam UUID itemId
     ) {
-        TransactionEntity createdTransaction = transactionService.createTransaction(buyer.getId(), sellerId, itemId);
-        return ResponseEntity.ok(createdTransaction);
+        transactionService.createTransaction(buyer.getId(), sellerId, itemId);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TransactionEntity> getTransactionById(@PathVariable UUID id) {
-        Optional<TransactionEntity> transaction = transactionService.getTransactionById(id);
-        return transaction.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<TransactionDto> getTransactionById(@PathVariable UUID id) {
+        return ResponseEntity.ok(transactionService.getTransactionById(id));
     }
 
-    // I think the purposes of these two APIs are to display all the transactions of the current logged-in user either as
-    // buyer or seller, so I used the id of the current user instead of having to pass the id in as a path variable
+    // I think the purposes of these two APIs are to display all the transactions of the current logged-in owner either as
+    // buyer or seller, so I used the id of the current owner instead of having to pass the id in as a path variable
     @GetMapping("/seller")
-    public List<TransactionEntity> getTransactionsAsSeller(@AuthenticationPrincipal UserEntity user) {
+    public List<TransactionDto> getTransactionsAsSeller(@AuthenticationPrincipal UserEntity user) {
         return transactionService.getTransactionsBySellerId(user.getId());
     }
 
     @GetMapping("/buyer")
-    public List<TransactionEntity> getTransactionsAsBuyer(@AuthenticationPrincipal UserEntity user) {
+    public List<TransactionDto> getTransactionsAsBuyer(@AuthenticationPrincipal UserEntity user) {
         return transactionService.getTransactionsByBuyerId(user.getId());
     }
 
     @GetMapping("/item/{itemId}")
-    public List<TransactionEntity> getTransactionsByItemId(@PathVariable UUID itemId) {
+    public List<TransactionDto> getTransactionsByItemId(@PathVariable UUID itemId) {
         return transactionService.getTransactionsByItemId(itemId);
     }
 
     @GetMapping("/status/{status}")
-    public List<TransactionEntity> getTransactionsByStatus(@PathVariable TransactionStatusEnum status) {
+    public List<TransactionDto> getTransactionsByStatus(@PathVariable TransactionStatusEnum status) {
         return transactionService.getTransactionsByStatus(status);
     }
 

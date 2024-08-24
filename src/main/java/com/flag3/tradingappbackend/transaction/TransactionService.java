@@ -2,32 +2,30 @@ package com.flag3.tradingappbackend.transaction;
 
 import com.flag3.tradingappbackend.db.ItemRepository;
 import com.flag3.tradingappbackend.db.TransactionRepository;
+import com.flag3.tradingappbackend.db.UserRepository;
+import com.flag3.tradingappbackend.db.dto.TransactionDto;
 import com.flag3.tradingappbackend.db.entity.ItemEntity;
 import com.flag3.tradingappbackend.db.entity.TransactionEntity;
 import com.flag3.tradingappbackend.db.enums.ItemStatusEnum;
 import com.flag3.tradingappbackend.db.enums.TransactionStatusEnum;
+import com.flag3.tradingappbackend.exceptions.AssetDoesNotExistException;
 import com.flag3.tradingappbackend.exceptions.TransactionItemInvalidException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final ItemRepository itemRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    public TransactionService(TransactionRepository transactionRepository, ItemRepository itemRepository) {
-        this.transactionRepository = transactionRepository;
-        this.itemRepository = itemRepository;
-    }
-
-    public TransactionEntity createTransaction(UUID buyerId, UUID sellerId, UUID itemId) {
+    public void createTransaction(UUID buyerId, UUID sellerId, UUID itemId) {
         // Fetch the item to ensure it exists and is valid for a transaction
         ItemEntity item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new TransactionItemInvalidException("Item not found or is no longer available"));
@@ -50,29 +48,44 @@ public class TransactionService {
         itemRepository.updateStatus(itemId, ItemStatusEnum.SOLD);
 
         // Save the transaction to the database
-        return transactionRepository.save(transactionEntity);
+        transactionRepository.save(transactionEntity);
     }
 
-    public Optional<TransactionEntity> getTransactionById(UUID id) {
-        return transactionRepository.findById(id);
+    public TransactionDto getTransactionById(UUID id) {
+        TransactionEntity transactionEntity = transactionRepository.findById(id)
+                .orElseThrow(() -> new AssetDoesNotExistException("Transaction"));
+        return new TransactionDto(transactionEntity);
     }
 
 
-    public List<TransactionEntity> getTransactionsBySellerId(UUID sellerId) {
-        return transactionRepository.findAllBySellerId(sellerId);
+    public List<TransactionDto> getTransactionsBySellerId(UUID sellerId) {
+        return transactionRepository.findAllBySellerId(sellerId)
+                .stream()
+                .map(TransactionDto::new)
+                .toList();
     }
 
-    public List<TransactionEntity> getTransactionsByBuyerId(UUID buyerId) {
-        return transactionRepository.findAllByBuyerId(buyerId);
+    public List<TransactionDto> getTransactionsByBuyerId(UUID buyerId) {
+        return transactionRepository.findAllByBuyerId(buyerId)
+                .stream()
+                .map(TransactionDto::new)
+                .toList();
     }
 
-    public List<TransactionEntity> getTransactionsByItemId(UUID itemId) {
-        return transactionRepository.findAllByItemId(itemId);
+    public List<TransactionDto> getTransactionsByItemId(UUID itemId) {
+        return transactionRepository.findAllByItemId(itemId)
+                .stream()
+                .map(TransactionDto::new)
+                .toList();
     }
 
-    public List<TransactionEntity> getTransactionsByStatus(TransactionStatusEnum statusEnum) {
-        return transactionRepository.findAllByStatus(statusEnum);
+    public List<TransactionDto> getTransactionsByStatus(TransactionStatusEnum statusEnum) {
+        return transactionRepository.findAllByStatus(statusEnum)
+                .stream()
+                .map(TransactionDto::new)
+                .toList();
     }
+
     public void updateStatus(UUID id, TransactionStatusEnum status) {
         transactionRepository.updateStatus(id, status);
     }
