@@ -42,7 +42,7 @@ public class TransactionService {
                 itemId,                        // Associated item ID
                 buyerId,                       // Buyer ID
                 sellerId,                      // Seller ID
-                TransactionStatusEnum.PENDING // Initial status
+                TransactionStatusEnum.PENDING  // Initial status
         );
 
         // Save the transaction to the database
