@@ -58,4 +58,5 @@ public class ItemController {
     public void deleteItem(@AuthenticationPrincipal UserEntity user, @PathVariable String id) {
         itemService.deleteItem(user.getId(), UUID.fromString(id));
     }
+
 }

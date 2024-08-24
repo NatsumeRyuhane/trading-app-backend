@@ -15,6 +15,7 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class ItemService {
+
     private final ItemRepository itemRepository;
 
     public List<ItemEntity> getAllItems() {
@@ -56,7 +57,6 @@ public class ItemService {
         itemRepository.save(itemEntity);
     }
 
-
     public void deleteItem(UUID userId, UUID itemId) {
         ItemEntity itemEntity = itemRepository.findById(itemId).get();
         if (itemEntity.getUserId().equals(userId)) {
@@ -65,4 +65,5 @@ public class ItemService {
             throw new ItemOperationUnauthorizedException("Unable to delete item: User does not own item");
         }
     }
+
 }
