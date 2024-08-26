@@ -3,11 +3,10 @@ package com.flag3.tradingappbackend.item;
 import com.flag3.tradingappbackend.db.ItemRepository;
 import com.flag3.tradingappbackend.db.entity.ItemEntity;
 import com.flag3.tradingappbackend.db.enums.ItemStatusEnum;
-import com.flag3.tradingappbackend.exceptions.ItemOperationUnauthorizedException;
+import com.flag3.tradingappbackend.exceptions.CartOperationUnauthorizedException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -62,7 +61,7 @@ public class ItemService {
         if (itemEntity.getUserId().equals(userId)) {
             itemRepository.deleteById(itemId);
         } else {
-            throw new ItemOperationUnauthorizedException("Unable to delete item: User does not own item");
+            throw new CartOperationUnauthorizedException("Unable to delete item: User does not own item");
         }
     }
 }

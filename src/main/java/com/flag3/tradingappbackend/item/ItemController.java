@@ -5,7 +5,6 @@ import com.flag3.tradingappbackend.db.entity.UserEntity;
 import com.flag3.tradingappbackend.db.enums.ItemStatusEnum;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -46,7 +45,7 @@ public class ItemController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void postItem(@RequestBody ItemPublishRequest body) {
+    public void postItem(@RequestBody com.flag3.tradingappbackend.item.ItemPublishRequest body) {
         itemService.createItem(
                 user.getId(),
                 body.name(),
