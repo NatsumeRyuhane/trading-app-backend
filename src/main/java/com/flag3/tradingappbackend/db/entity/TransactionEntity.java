@@ -94,6 +94,4 @@ public class TransactionEntity {
         this.status = status;
     }
 
-    // No need to manually write constructors, getters, equals, hashCode, or toString methods
-    // Lombok will generate them automatically based on the annotations used.
 }

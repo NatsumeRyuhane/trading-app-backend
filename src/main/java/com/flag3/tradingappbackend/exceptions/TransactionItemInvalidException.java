@@ -1,4 +1,4 @@
-package com.flag3.tradingappbackend.transaction;
+package com.flag3.tradingappbackend.exceptions;
 
 // This exception is thrown when a transaction item is invalid, for example,
 // the item is taken down or already sold

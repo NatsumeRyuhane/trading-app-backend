@@ -2,7 +2,10 @@ package com.flag3.tradingappbackend.db;
 
 import com.flag3.tradingappbackend.db.entity.ItemEntity;
 import com.flag3.tradingappbackend.db.enums.ItemStatusEnum;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,4 +22,10 @@ public interface ItemRepository extends JpaRepository<ItemEntity, UUID> {
     List<ItemEntity> findAllByNameContaining(String name);
 
     List<ItemEntity> findAllByStatus(ItemStatusEnum statusEnum);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE items SET status = :status WHERE id = :id", nativeQuery = true)
+    void updateStatus(UUID id, ItemStatusEnum status);
+
 }
