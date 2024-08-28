@@ -41,4 +41,12 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalStateException(IllegalStateException ex) {
+        return new ResponseEntity<>(
+                new ErrorResponse(ex.getMessage(), ex.toString()),
+                HttpStatus.INTERNAL_SERVER_ERROR
+        );
+    }
+
 }
