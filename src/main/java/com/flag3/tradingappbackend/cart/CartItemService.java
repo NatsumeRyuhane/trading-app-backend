@@ -22,11 +22,11 @@ public class CartItemService {
     }
 
     public Optional<CartItemEntity> getCartById(UUID id) {
-        return cartItemRepository.findById(id);
+        return cartItemRepository.findAllById(id);
     }
 
     public List<CartItemEntity> getCartByUserId(UUID userId) {
-        return cartItemRepository.findByUserId(userId);
+        return cartItemRepository.findAllByUserId(userId);
     }
 
     public boolean cartItemExists(UUID id) {
@@ -35,14 +35,13 @@ public class CartItemService {
 
     public void createCart(
             UUID userId,
-            UUID cartId,
-            LocalDateTime createdAt
+            UUID itemId
     ) {
         CartItemEntity cartItemEntity = new CartItemEntity(
                 UUID.randomUUID(),
                 userId,
-                cartId,
-                createdAt
+                itemId,
+                LocalDateTime.now()
         );
         cartItemRepository.save(cartItemEntity);
     }

@@ -36,8 +36,7 @@ public class CartItemController {
     public void postCart(@RequestBody CartPublishRequest body) {
         cartItemService.createCart(
                 user.getId(),
-                body.itemId(),
-                body.createdAt()
+                body.itemId()
         );
     }
 

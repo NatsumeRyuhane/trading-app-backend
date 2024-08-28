@@ -11,11 +11,11 @@ import java.util.UUID;
 @Repository
 public interface CartItemRepository extends JpaRepository<CartItemEntity, UUID> {
 
-    Optional<CartItemEntity> findById(UUID id);
+    Optional<CartItemEntity> findAllById(UUID id);
 
-    List<CartItemEntity> findByUserId(UUID userId);
+    List<CartItemEntity> findAllByUserId(UUID userId);
 
-    List<CartItemEntity> findByItemId(UUID itemId);
+    List<CartItemEntity> findAllByItemId(UUID itemId);
 
-    List<CartItemEntity> findByCreatedTime(UUID CreatedAt);
+    List<CartItemEntity> findAllByCreatedTime(UUID CreatedAt);
 }
