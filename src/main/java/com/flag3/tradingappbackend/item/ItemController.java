@@ -6,6 +6,7 @@ import com.flag3.tradingappbackend.db.entity.UserEntity;
 import com.flag3.tradingappbackend.db.enums.ItemStatusEnum;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;

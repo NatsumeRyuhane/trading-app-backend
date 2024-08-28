@@ -86,7 +86,7 @@ public class ItemService {
         if (itemEntity.getUserId().equals(userId)) {
             itemRepository.deleteById(itemId);
         } else {
-            throw new CartOperationUnauthorizedException("Unable to delete item: User does not own item");
+            throw new ItemOperationUnauthorizedException("Unable to delete item: User does not own item");
         }
     }
 
