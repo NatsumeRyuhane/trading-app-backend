@@ -33,8 +33,13 @@ logging:
     org.apache.coyote.http11.Http11InputBuffer: TRACE
     org.springframework.jdbc.core: TRACE
     org.springframework.jdbc.datasource.init: TRACE
+    org.springframework.security: TRACE
 
 
 server:
   # HTTP port (default: 8080)
   port: 8080
+
+tradingapp:
+  jwt:
+    secret-key: hYW3L6I3gPpEUbtU+17FEHRYJuc8uLYHaLLsuzzyKn4=
