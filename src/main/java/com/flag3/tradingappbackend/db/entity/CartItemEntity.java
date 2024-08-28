@@ -2,20 +2,18 @@ package com.flag3.tradingappbackend.db.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "carts")
+@Table(name = "cart_items")
 @NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
-public class CartEntity {
+public class CartItemEntity {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -29,16 +27,16 @@ public class CartEntity {
     @Column(name = "user_id", nullable = false)
     private UUID userId;
 
-    @Column(name = "cart_id", nullable = false)
-    private UUID cartId;
+    @Column(name = "item_id", nullable = false)
+    private UUID itemId;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemEntity> items;
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
-    public CartEntity(UUID uuid, UUID userId, UUID cartId, List<ItemEntity> items) {
+    public CartItemEntity(UUID uuid, UUID userId, UUID itemId, LocalDateTime createdAt) {
         this.id = uuid;
         this.userId = userId;
-        this.cartId = cartId;
-        this.items = items;
+        this.itemId = itemId;
+        this.createdAt = createdAt;
     }
 }
