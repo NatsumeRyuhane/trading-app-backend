@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -37,15 +38,23 @@ public class ItemController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void postItem(@AuthenticationPrincipal UserEntity user, @RequestBody ItemPublishRequest body) {
+    public void postItem(
+            @AuthenticationPrincipal UserEntity user,
+            String name,
+            double price,
+            String description,
+            List<MultipartFile> media,
+            ItemStatusEnum status,
+            String address
+    ) {
         itemService.createItem(
                 user.getId(),
-                body.name(),
-                body.price(),
-                body.description(),
-                body.mediaUrls(),
-                body.status(),
-                body.address()
+                name,
+                price,
+                description,
+                media,
+                status,
+                address
         );
     }
 

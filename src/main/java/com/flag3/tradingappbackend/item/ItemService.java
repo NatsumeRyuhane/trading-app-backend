@@ -7,8 +7,10 @@ import com.flag3.tradingappbackend.db.entity.UserEntity;
 import com.flag3.tradingappbackend.db.enums.ItemStatusEnum;
 import com.flag3.tradingappbackend.exceptions.AssetDoesNotExistException;
 import com.flag3.tradingappbackend.exceptions.ItemOperationUnauthorizedException;
+import com.flag3.tradingappbackend.storage.MediaStorageService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.UUID;
 public class ItemService {
 
     private final ItemRepository itemRepository;
+    private final MediaStorageService mediaStorageService;
 
     public List<ItemDto> getAllItems() {
         return itemRepository.findAll()
@@ -64,11 +67,15 @@ public class ItemService {
             String name,
             double price,
             String description,
-            List<String> mediaUrls,
+            List<MultipartFile> media,
             ItemStatusEnum status,
             String address
     ) {
-        // TODO: deal with potential request duplication from front end
+        List<String> mediaUrls = media.parallelStream()
+                .filter(file -> !file.isEmpty())
+                .map(mediaStorageService::upload)
+                .toList();
+
         ItemEntity itemEntity = new ItemEntity(
                 UUID.randomUUID(),
                 userId,
