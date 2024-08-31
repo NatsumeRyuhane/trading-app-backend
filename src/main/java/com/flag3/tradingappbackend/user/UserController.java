@@ -28,12 +28,16 @@ public class UserController {
     }
 
     @PostMapping("/get/users/rating/{id}")
-    public double getRating(@PathVariable UUID id) {
+    public RatingResponse getRating(@PathVariable UUID id) {
         List<TransactionDto> transactionList = transactionService.getTransactionsByBuyerId(id);
         double total = 0.0;
+        int size = 0;
         for (TransactionDto i : transactionList) {
-            total += i.buyerToSellerRating();
+            if (i.buyerToSellerRating() != null) {
+                total += i.buyerToSellerRating();
+                size++;
+            }
         }
-        return total / transactionList.size();
+        return new RatingResponse(total, size);
     }
 }
