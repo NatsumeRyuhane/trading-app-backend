@@ -4,6 +4,7 @@ import com.flag3.tradingappbackend.db.ItemRepository;
 import com.flag3.tradingappbackend.db.dto.ItemDto;
 import com.flag3.tradingappbackend.db.entity.ItemEntity;
 import com.flag3.tradingappbackend.db.entity.UserEntity;
+import com.flag3.tradingappbackend.db.enums.ItemCategoryEnum;
 import com.flag3.tradingappbackend.db.enums.ItemStatusEnum;
 import com.flag3.tradingappbackend.exceptions.AssetDoesNotExistException;
 import com.flag3.tradingappbackend.exceptions.ItemOperationUnauthorizedException;
@@ -60,6 +61,12 @@ public class ItemService {
                 .map(ItemDto::new)
                 .toList();
     }
+    public List<ItemDto> searchItemsByCategory(ItemCategoryEnum category) {
+        return itemRepository.findAllByCategory(category)
+                .stream()
+                .map(ItemDto::new)
+                .toList();
+    }
 
     public void createItem(
             UUID userId,
@@ -68,6 +75,7 @@ public class ItemService {
             String description,
             List<MultipartFile> media,
             ItemStatusEnum status,
+            ItemCategoryEnum category,
             String address
     ) {
         List<String> mediaUrls = media.parallelStream()
@@ -83,6 +91,7 @@ public class ItemService {
                 description,
                 mediaUrls,
                 status,
+                category,
                 address
         );
         itemRepository.save(itemEntity);

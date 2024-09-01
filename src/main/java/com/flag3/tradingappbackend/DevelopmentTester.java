@@ -4,6 +4,7 @@ import com.flag3.tradingappbackend.db.ItemRepository;
 import com.flag3.tradingappbackend.db.UserRepository;
 import com.flag3.tradingappbackend.db.entity.ItemEntity;
 import com.flag3.tradingappbackend.db.entity.UserEntity;
+import com.flag3.tradingappbackend.db.enums.ItemCategoryEnum;
 import com.flag3.tradingappbackend.db.enums.ItemStatusEnum;
 import com.flag3.tradingappbackend.user.UserService;
 import lombok.AllArgsConstructor;
@@ -60,6 +61,7 @@ public class DevelopmentTester implements ApplicationRunner {
                 "My bed",
                 List.of("img1.jpeg"),
                 ItemStatusEnum.AVAILABLE,
+                ItemCategoryEnum.KITCHEN,
                 "123 Main Street"
         ));
     }
