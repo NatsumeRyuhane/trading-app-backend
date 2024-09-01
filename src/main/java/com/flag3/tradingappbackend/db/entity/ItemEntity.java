@@ -1,5 +1,6 @@
 package com.flag3.tradingappbackend.db.entity;
 
+import com.flag3.tradingappbackend.db.enums.ItemCategoryEnum;
 import com.flag3.tradingappbackend.db.enums.ItemStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,7 +37,12 @@ public class ItemEntity {
     private List<String> mediaUrls;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private ItemStatusEnum status = ItemStatusEnum.AVAILABLE;
+
+    @Column(name = "category", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private ItemCategoryEnum category; // New field for category
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
@@ -57,6 +63,7 @@ public class ItemEntity {
             String description,
             List<String> mediaUrls,
             ItemStatusEnum status,
+            ItemCategoryEnum category,
             String address
     ) {
         this.id = id;
@@ -66,6 +73,7 @@ public class ItemEntity {
         this.description = description;
         this.mediaUrls = mediaUrls;
         this.status = status;
+        this.category=category;
         this.address = address;
     }
 }

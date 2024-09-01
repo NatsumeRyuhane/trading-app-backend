@@ -3,6 +3,7 @@ package com.flag3.tradingappbackend.item;
 import com.flag3.tradingappbackend.db.dto.ItemDto;
 import com.flag3.tradingappbackend.db.entity.ItemEntity;
 import com.flag3.tradingappbackend.db.entity.UserEntity;
+import com.flag3.tradingappbackend.db.enums.ItemCategoryEnum;
 import com.flag3.tradingappbackend.db.enums.ItemStatusEnum;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,9 @@ public class ItemController {
         return itemService.searchItemsByName(name);
     }
 
+    @GetMapping("/category")
+    public List<ItemDto> searchItemsByCategory(@RequestParam ItemCategoryEnum category){return itemService.searchItemsByCategory( category);}
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void postItem(
@@ -45,6 +49,7 @@ public class ItemController {
             String description,
             List<MultipartFile> media,
             ItemStatusEnum status,
+            ItemCategoryEnum category,
             String address
     ) {
         itemService.createItem(
@@ -54,6 +59,7 @@ public class ItemController {
                 description,
                 media,
                 status,
+                category,
                 address
         );
     }

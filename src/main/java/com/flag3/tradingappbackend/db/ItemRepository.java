@@ -1,6 +1,7 @@
 package com.flag3.tradingappbackend.db;
 
 import com.flag3.tradingappbackend.db.entity.ItemEntity;
+import com.flag3.tradingappbackend.db.enums.ItemCategoryEnum;
 import com.flag3.tradingappbackend.db.enums.ItemStatusEnum;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,9 +24,13 @@ public interface ItemRepository extends JpaRepository<ItemEntity, UUID> {
 
     List<ItemEntity> findAllByStatus(ItemStatusEnum statusEnum);
 
+    List<ItemEntity> findAllByCategory(ItemCategoryEnum category);
+
     @Modifying
     @Transactional
     @Query(value = "UPDATE items SET status = :status WHERE id = :id", nativeQuery = true)
     void updateStatus(UUID id, ItemStatusEnum status);
+
+
 
 }
