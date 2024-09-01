@@ -1,7 +1,6 @@
 package com.flag3.tradingappbackend.item;
 
 import com.flag3.tradingappbackend.db.dto.ItemDto;
-import com.flag3.tradingappbackend.db.entity.ItemEntity;
 import com.flag3.tradingappbackend.db.entity.UserEntity;
 import com.flag3.tradingappbackend.db.enums.ItemCategoryEnum;
 import com.flag3.tradingappbackend.db.enums.ItemStatusEnum;
@@ -11,7 +10,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,6 +28,11 @@ public class ItemController {
     @GetMapping("/mine")
     public List<ItemDto> getAllItemsOfCurrentUser(@AuthenticationPrincipal UserEntity user) {
         return itemService.getAllItemsOfUser(user.getId());
+    }
+
+    @GetMapping("/{itemId}")
+    public ItemDto getItemById(@PathVariable UUID itemId) {
+        return itemService.getItemById(itemId);
     }
 
     @GetMapping("/search")
