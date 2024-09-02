@@ -40,7 +40,7 @@ public class ItemEntity {
     @Enumerated(EnumType.STRING)
     private ItemStatusEnum status = ItemStatusEnum.AVAILABLE;
 
-    @Column(name = "category", nullable = false)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ItemCategoryEnum category; // New field for category
 
@@ -73,7 +73,7 @@ public class ItemEntity {
         this.description = description;
         this.mediaUrls = mediaUrls;
         this.status = status;
-        this.category=category;
+        this.category = category;
         this.address = address;
     }
 }

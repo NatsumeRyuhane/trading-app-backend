@@ -45,7 +45,7 @@ public class TransactionService {
         );
 
         // Update the item status to SOLD so no more transactions can be created with the item
-        itemRepository.updateStatus(itemId, ItemStatusEnum.SOLD);
+        itemRepository.updateStatus(itemId, ItemStatusEnum.SOLD.name());
 
         // Save the transaction to the database
         transactionRepository.save(transactionEntity);
@@ -87,30 +87,35 @@ public class TransactionService {
     }
 
     public void updateStatus(UUID id, TransactionStatusEnum status) {
-        transactionRepository.updateStatus(id, status);
+        transactionRepository.updateStatus(id, status.name());
     }
 
     public void updateShipped(UUID id) {
         transactionRepository.updateShippedAt(id, LocalDateTime.now());
-        transactionRepository.updateStatus(id, TransactionStatusEnum.SHIPPED);
+        transactionRepository.updateStatus(id, TransactionStatusEnum.SHIPPED.name());
     }
 
     public void updateDelivered(UUID id) {
         transactionRepository.updateDeliveredAt(id, LocalDateTime.now());
-        transactionRepository.updateStatus(id, TransactionStatusEnum.DELIVERED);
+        transactionRepository.updateStatus(id, TransactionStatusEnum.DELIVERED.name());
     }
 
     public void updateConfirmed(UUID id) {
         transactionRepository.updateConfirmedAt(id, LocalDateTime.now());
-        transactionRepository.updateStatus(id, TransactionStatusEnum.CONFIRMED);
+        transactionRepository.updateStatus(id, TransactionStatusEnum.CONFIRMED.name());
     }
 
     public void updateCanceled(UUID id) {
         transactionRepository.updateCanceledAt(id, LocalDateTime.now());
-        transactionRepository.updateStatus(id, TransactionStatusEnum.CANCELED);
+        transactionRepository.updateStatus(id, TransactionStatusEnum.CANCELED.name());
 
         // Set the status of the item back to AVAILABLE after cancellation
         TransactionEntity transaction = transactionRepository.getReferenceById(id);
-        itemRepository.updateStatus(transaction.getItemId(), ItemStatusEnum.AVAILABLE);
+        itemRepository.updateStatus(transaction.getItemId(), ItemStatusEnum.AVAILABLE.name());
     }
+
+    public void updateBuyerToSellerRating(UUID id, Double rating) {
+        transactionRepository.updateBuyerToSellerRating(id, rating);
+    }
+
 }

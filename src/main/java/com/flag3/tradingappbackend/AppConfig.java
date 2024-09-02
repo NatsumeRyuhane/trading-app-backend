@@ -33,6 +33,7 @@ public class AppConfig {
                         auth ->
                                 auth
                                         .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                                        .requestMatchers("/users/**").permitAll()
                                         // item APIs that need login: see all my items, upload item, delete item
                                         .requestMatchers("/items/mine").hasAuthority("USER")
                                         .requestMatchers(HttpMethod.POST, "items").hasAuthority("USER")

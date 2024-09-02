@@ -90,4 +90,10 @@ public class TransactionController {
         return ResponseEntity.ok().build();
     }
 
+    @PatchMapping("/{id}/rating")
+    public ResponseEntity<Void> updateBuyerToSellerRating(@PathVariable UUID id, @RequestParam Double rating) {
+        transactionService.updateBuyerToSellerRating(id, rating);
+        return ResponseEntity.ok().build();
+    }
+
 }

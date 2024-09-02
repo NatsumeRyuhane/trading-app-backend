@@ -22,11 +22,6 @@ import jakarta.validation.constraints.Min;
 public class TransactionEntity {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 

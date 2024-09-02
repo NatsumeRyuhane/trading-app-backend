@@ -1,11 +1,14 @@
 package com.flag3.tradingappbackend;
 
 import com.flag3.tradingappbackend.db.ItemRepository;
+import com.flag3.tradingappbackend.db.TransactionRepository;
 import com.flag3.tradingappbackend.db.UserRepository;
 import com.flag3.tradingappbackend.db.entity.ItemEntity;
+import com.flag3.tradingappbackend.db.entity.TransactionEntity;
 import com.flag3.tradingappbackend.db.entity.UserEntity;
 import com.flag3.tradingappbackend.db.enums.ItemCategoryEnum;
 import com.flag3.tradingappbackend.db.enums.ItemStatusEnum;
+import com.flag3.tradingappbackend.db.enums.TransactionStatusEnum;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +25,10 @@ import java.util.UUID;
 @AllArgsConstructor
 public class DevelopmentTester implements ApplicationRunner {
 
-    private static final Logger logger = LoggerFactory.getLogger(DevelopmentTester.class);
-
     private final UserRepository userRepository;
     private final ItemRepository itemRepository;
     private final PasswordEncoder passwordEncoder;
+    private final TransactionRepository transactionRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -59,10 +61,19 @@ public class DevelopmentTester implements ApplicationRunner {
                 40.00,
                 "My bed",
                 List.of("img1.jpeg"),
-                ItemStatusEnum.AVAILABLE,
-                ItemCategoryEnum.KITCHEN,
+                ItemStatusEnum.SOLD,
+                ItemCategoryEnum.BEDDING,
                 "123 Main Street"
         ));
+
+        transactionRepository.save(new TransactionEntity(
+                UUID.fromString("8f993165-108b-4f85-a732-a66ab77a2c32"),
+                UUID.fromString("b6f961f3-dd4e-4ef2-8ab0-ae93a72608a0"),
+                UUID.fromString("a85aa07b-736c-47c5-8ea7-4b2762c7efc6"),
+                UUID.fromString("e18452c5-c2d0-492f-b53f-a62121adc466"),
+                TransactionStatusEnum.PENDING
+        ));
+
     }
 
 }

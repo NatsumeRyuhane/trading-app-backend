@@ -29,8 +29,6 @@ public interface ItemRepository extends JpaRepository<ItemEntity, UUID> {
     @Modifying
     @Transactional
     @Query(value = "UPDATE items SET status = :status WHERE id = :id", nativeQuery = true)
-    void updateStatus(UUID id, ItemStatusEnum status);
-
-
+    void updateStatus(UUID id, String status);
 
 }
