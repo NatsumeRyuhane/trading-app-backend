@@ -2,6 +2,7 @@ package com.flag3.tradingappbackend.db.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.flag3.tradingappbackend.db.entity.ItemEntity;
+import com.flag3.tradingappbackend.db.enums.ItemCategoryEnum;
 import com.flag3.tradingappbackend.db.enums.ItemStatusEnum;
 
 import java.time.LocalDateTime;
@@ -27,6 +28,8 @@ public record ItemDto(
 
         String address,
 
+        ItemCategoryEnum category,
+
         UserDto owner
 ) {
 
@@ -40,6 +43,7 @@ public record ItemDto(
                 itemEntity.getStatus(),
                 itemEntity.getCreatedAt(),
                 itemEntity.getAddress(),
+                itemEntity.getCategory(),
                 new UserDto(itemEntity.getUser())
         );
     }
