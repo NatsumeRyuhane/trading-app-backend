@@ -17,22 +17,18 @@ import java.util.UUID;
 @Repository
 public interface TransactionRepository extends JpaRepository<TransactionEntity, UUID> {
 
-
-
     Optional<TransactionEntity> findById(UUID id);
 
-    //List<TransactionEntity> findAllByUserId(UUID userId);
     List<TransactionEntity> findAllBySellerId(UUID sellerId);
     List<TransactionEntity> findAllByBuyerId(UUID buyerId);
     List<TransactionEntity> findAllByItemId(UUID itemId);
 
     List<TransactionEntity> findAllByStatus(TransactionStatusEnum statusEnum);
 
-
     @Modifying
     @Transactional
     @Query("UPDATE TransactionEntity t SET t.status = :status WHERE t.id = :id")
-    int updateStatus(UUID id, TransactionStatusEnum status );
+    int updateStatus(UUID id, String status);
 
     @Modifying
     @Transactional
@@ -53,4 +49,10 @@ public interface TransactionRepository extends JpaRepository<TransactionEntity, 
     @Transactional
     @Query("UPDATE TransactionEntity t SET t.canceledAt = :timeValue WHERE t.id = :id")
     int updateCanceledAt(UUID id, LocalDateTime timeValue);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE TransactionEntity t SET t.buyerToSellerRating = :rating WHERE t.id = :id")
+    int updateBuyerToSellerRating(UUID id, Double rating);
+
 }
