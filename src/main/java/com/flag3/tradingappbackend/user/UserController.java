@@ -23,7 +23,7 @@ public class UserController {
     @PostMapping("/auth/login")
     public LoginResponse login(@RequestBody LoginRequest body) {
         String token = userService.login(body.username(), body.password());
-        return new LoginResponse(token);
+        return new LoginResponse(token, body.username());
     }
 
     @GetMapping("/users/rating")
