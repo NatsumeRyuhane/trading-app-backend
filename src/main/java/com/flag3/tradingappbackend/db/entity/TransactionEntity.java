@@ -34,7 +34,8 @@ public class TransactionEntity {
     @Column(name = "seller_id", nullable = false)
     private UUID sellerId;
 
-    @Column(name = "status", nullable = false)
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private TransactionStatusEnum status;
 
     @Column(name = "buyer_to_seller_rating")
