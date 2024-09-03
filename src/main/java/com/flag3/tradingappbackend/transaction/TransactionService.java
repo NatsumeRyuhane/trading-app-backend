@@ -44,8 +44,8 @@ public class TransactionService {
                 TransactionStatusEnum.PENDING  // Initial status
         );
 
-        // Update the item status to SOLD so no more transactions can be created with the item
-        itemRepository.updateStatus(itemId, ItemStatusEnum.SOLD.name());
+        // Update the item status to ONGOING_TRADE so no more transactions can be created with the item
+        itemRepository.updateStatus(itemId, ItemStatusEnum.ONGOING_TRADE.name());
 
         // Save the transaction to the database
         transactionRepository.save(transactionEntity);
