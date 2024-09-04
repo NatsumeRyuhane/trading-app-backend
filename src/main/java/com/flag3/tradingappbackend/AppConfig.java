@@ -40,6 +40,7 @@ public class AppConfig {
                                         .requestMatchers(HttpMethod.DELETE, "items").hasAuthority("USER")
                                         .requestMatchers("/items/**").permitAll()
                                         .requestMatchers("/transactions/**").hasAuthority("USER")
+                                        .requestMatchers("/cart/**").hasAuthority("USER")
                                         .anyRequest().authenticated()
                 )
                 .sessionManagement()
