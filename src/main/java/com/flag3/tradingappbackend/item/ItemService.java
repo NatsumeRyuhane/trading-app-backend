@@ -106,4 +106,8 @@ public class ItemService {
         }
     }
 
+    public void updateItemStatus(UUID id, ItemStatusEnum status) {
+        itemRepository.updateStatus(id, status.name());
+    }
+
 }
