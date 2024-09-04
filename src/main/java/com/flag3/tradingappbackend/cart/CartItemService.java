@@ -1,8 +1,10 @@
 package com.flag3.tradingappbackend.cart;
 
 import com.flag3.tradingappbackend.db.CartItemRepository;
+import com.flag3.tradingappbackend.db.dto.CartItemDto;
 import com.flag3.tradingappbackend.db.entity.CartItemEntity;
 import com.flag3.tradingappbackend.db.entity.ItemEntity;
+import com.flag3.tradingappbackend.exceptions.AssetDoesNotExistException;
 import com.flag3.tradingappbackend.exceptions.CartOperationUnauthorizedException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,19 +23,23 @@ public class CartItemService {
         return cartItemRepository.findAll();
     }
 
-    public Optional<CartItemEntity> getCartById(UUID id) {
+    public Optional<CartItemEntity> getCartItemsById(UUID id) {
         return cartItemRepository.findAllById(id);
     }
 
-    public List<CartItemEntity> getCartByUserId(UUID userId) {
-        return cartItemRepository.findAllByUserId(userId);
+    public List<CartItemDto> getCartItemsByUserId(UUID userId) {
+        return cartItemRepository.findAllByUserId(userId)
+                .stream()
+                .filter(cart -> cart.getUserId().equals(userId))
+                .map(CartItemDto::new)
+                .toList();
     }
 
     public boolean cartItemExists(UUID id) {
         return cartItemRepository.existsById(id);
     }
 
-    public void createCart(
+    public void addItemToCart(
             UUID userId,
             UUID itemId
     ) {
@@ -46,13 +52,9 @@ public class CartItemService {
         cartItemRepository.save(cartItemEntity);
     }
 
-
     public void deleteCartItem(UUID userId, UUID itemId) {
-        CartItemEntity cartItemEntity = cartItemRepository.findById(itemId).get();
-        if (cartItemEntity.getUserId().equals(userId)) {
-            cartItemRepository.deleteById(userId);
-        } else {
-            throw new CartOperationUnauthorizedException("Unable to delete cart item: User does not own cart item");
-        }
+        CartItemEntity cartItemEntity = cartItemRepository.findByUserIdAndItemId(userId, itemId)
+                .orElseThrow(() -> new AssetDoesNotExistException("Cart item"));
+        cartItemRepository.delete(cartItemEntity);
     }
 }

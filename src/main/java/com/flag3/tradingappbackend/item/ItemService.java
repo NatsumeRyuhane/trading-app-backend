@@ -58,12 +58,14 @@ public class ItemService {
     public List<ItemDto> searchItemsByName(String query) {
         return itemRepository.findAllByNameContaining(query)
                 .stream()
+                .filter(item -> item.getStatus() == ItemStatusEnum.AVAILABLE)
                 .map(ItemDto::new)
                 .toList();
     }
     public List<ItemDto> searchItemsByCategory(ItemCategoryEnum category) {
         return itemRepository.findAllByCategory(category)
                 .stream()
+                .filter(item -> item.getStatus() == ItemStatusEnum.AVAILABLE)
                 .map(ItemDto::new)
                 .toList();
     }
@@ -104,6 +106,10 @@ public class ItemService {
         } else {
             throw new ItemOperationUnauthorizedException("Unable to delete item: User does not own item");
         }
+    }
+
+    public void updateItemStatus(UUID id, ItemStatusEnum status) {
+        itemRepository.updateStatus(id, status.name());
     }
 
 }

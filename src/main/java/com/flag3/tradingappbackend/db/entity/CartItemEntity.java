@@ -16,11 +16,6 @@ import java.util.UUID;
 public class CartItemEntity {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
@@ -33,10 +28,15 @@ public class CartItemEntity {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @ManyToOne
+    @JoinColumn(name = "item_id", foreignKey = @ForeignKey(name = "fk_item_cart"), insertable = false, updatable = false)
+    private ItemEntity item;
+
     public CartItemEntity(UUID uuid, UUID userId, UUID itemId, LocalDateTime createdAt) {
         this.id = uuid;
         this.userId = userId;
         this.itemId = itemId;
         this.createdAt = createdAt;
     }
+
 }

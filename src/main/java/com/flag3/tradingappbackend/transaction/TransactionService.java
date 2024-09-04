@@ -103,6 +103,11 @@ public class TransactionService {
     public void updateConfirmed(UUID id) {
         transactionRepository.updateConfirmedAt(id, LocalDateTime.now());
         transactionRepository.updateStatus(id, TransactionStatusEnum.CONFIRMED.name());
+
+        // Update the status of the associated item to SOLD
+        TransactionEntity transaction = transactionRepository.getReferenceById(id);
+        ItemEntity item = itemRepository.getReferenceById(transaction.getItemId());
+        itemRepository.updateStatus(item.getId(), ItemStatusEnum.SOLD.name());
     }
 
     public void updateCanceled(UUID id) {

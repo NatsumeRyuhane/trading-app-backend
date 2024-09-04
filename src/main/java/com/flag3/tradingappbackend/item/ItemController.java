@@ -67,6 +67,11 @@ public class ItemController {
         );
     }
 
+    @PatchMapping("/{id}")
+    public void updateItemStatus(@PathVariable UUID id, @RequestParam ItemStatusEnum status) {
+        itemService.updateItemStatus(id, status);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteItem(@AuthenticationPrincipal UserEntity user, @PathVariable String id) {
         itemService.deleteItem(user.getId(), UUID.fromString(id));
