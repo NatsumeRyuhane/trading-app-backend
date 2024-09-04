@@ -58,12 +58,14 @@ public class ItemService {
     public List<ItemDto> searchItemsByName(String query) {
         return itemRepository.findAllByNameContaining(query)
                 .stream()
+                .filter(item -> item.getStatus() == ItemStatusEnum.AVAILABLE)
                 .map(ItemDto::new)
                 .toList();
     }
     public List<ItemDto> searchItemsByCategory(ItemCategoryEnum category) {
         return itemRepository.findAllByCategory(category)
                 .stream()
+                .filter(item -> item.getStatus() == ItemStatusEnum.AVAILABLE)
                 .map(ItemDto::new)
                 .toList();
     }
