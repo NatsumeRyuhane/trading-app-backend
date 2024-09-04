@@ -64,7 +64,7 @@ public class DevelopmentTester implements ApplicationRunner {
                 40.00,
                 "My bed",
                 List.of("https://images.unsplash.com/photo-1640003145136-f998284e11de?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fG1hdHRyZXNzfGVufDB8fDB8fHww"),
-                ItemStatusEnum.SOLD,
+                ItemStatusEnum.ONGOING_TRADE,
                 ItemCategoryEnum.BEDDING,
                 "123 Main Street"
         ));
@@ -96,7 +96,7 @@ public class DevelopmentTester implements ApplicationRunner {
                 35,
                 "Brand new pot",
                 List.of("https://images.unsplash.com/photo-1556911820-1238441ed1a7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHBvdHxlbnwwfHwwfHx8MA%3D%3D"),
-                ItemStatusEnum.AVAILABLE,
+                ItemStatusEnum.UNPUBLISHED,
                 ItemCategoryEnum.KITCHEN,
                 "123 Main Street"
         ));
