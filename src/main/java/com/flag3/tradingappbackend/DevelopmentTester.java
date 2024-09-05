@@ -74,7 +74,7 @@ public class DevelopmentTester implements ApplicationRunner {
                 UUID.fromString("b6f961f3-dd4e-4ef2-8ab0-ae93a72608a0"),
                 joeyUuid,
                 stevenUuid,
-                TransactionStatusEnum.PENDING
+                TransactionStatusEnum.IN_PROGRESS
         ));
 
         itemRepository.save(new ItemEntity(
