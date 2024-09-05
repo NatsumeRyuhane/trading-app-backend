@@ -9,7 +9,8 @@ public record UserDto(
         String username,
         String firstName,
         String lastName,
-        String address
+        String address,
+        String phoneNumber
 ) {
 
     public UserDto(UserEntity userEntity) {
@@ -18,7 +19,8 @@ public record UserDto(
                 userEntity.getUsername(),
                 userEntity.getFirstName(),
                 userEntity.getLastName(),
-                userEntity.getAddress()
+                userEntity.getAddress(),
+                userEntity.getPhoneNumber()
         );
     }
 

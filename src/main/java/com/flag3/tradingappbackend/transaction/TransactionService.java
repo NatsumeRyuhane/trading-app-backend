@@ -41,7 +41,7 @@ public class TransactionService {
                 itemId,                        // Associated item ID
                 buyerId,                       // Buyer ID
                 sellerId,                      // Seller ID
-                TransactionStatusEnum.PENDING  // Initial status
+                TransactionStatusEnum.IN_PROGRESS  // Initial status
         );
 
         // Update the item status to ONGOING_TRADE so no more transactions can be created with the item

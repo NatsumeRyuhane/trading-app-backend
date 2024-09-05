@@ -39,6 +39,9 @@ public class UserEntity implements UserDetails {
     @Column(nullable = false)
     private String address;
 
+    @Column(name = "phone_number", nullable = false)
+    private String phoneNumber;
+
     @Column(nullable = false)
     private boolean enabled = true;
 
@@ -52,7 +55,8 @@ public class UserEntity implements UserDetails {
             String password,
             String firstName,
             String lastName,
-            String address
+            String address,
+            String phoneNumber
     ) {
         this.id = id;
         this.username = username;
@@ -60,6 +64,7 @@ public class UserEntity implements UserDetails {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
+        this.phoneNumber = phoneNumber;
     }
 
     @Override
