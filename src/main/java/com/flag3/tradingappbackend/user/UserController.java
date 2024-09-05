@@ -17,7 +17,7 @@ public class UserController {
 
     @PostMapping("/auth/register")
     public void register(@RequestBody RegisterRequest body) {
-        userService.register(body.username(), body.password(), body.firstName(), body.lastName(), body.address());
+        userService.register(body.username(), body.password(), body.firstName(), body.lastName(), body.address(), body.phoneNumber());
     }
 
     @PostMapping("/auth/login")

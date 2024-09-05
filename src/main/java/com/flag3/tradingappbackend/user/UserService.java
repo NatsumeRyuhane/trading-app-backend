@@ -33,7 +33,8 @@ public class UserService {
             String password,
             String firstName,
             String lastName,
-            String address
+            String address,
+            String phoneNumber
     ) throws UserAlreadyExistsException {
         if (userRepository.existsByUsername(username)) {
             throw new UserAlreadyExistsException();
@@ -45,7 +46,8 @@ public class UserService {
                 passwordEncoder.encode(password),
                 firstName,
                 lastName,
-                address
+                address,
+                phoneNumber
         );
         return userRepository.save(userEntity);
     }

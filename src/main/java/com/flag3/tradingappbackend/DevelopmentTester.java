@@ -42,8 +42,7 @@ public class DevelopmentTester implements ApplicationRunner {
                 "steven",
                 "yi",
                 "123 Main Street",
-                true,
-                LocalDateTime.now()
+                "1234567890"
         ));
 
         userRepository.save(new UserEntity(
@@ -53,8 +52,7 @@ public class DevelopmentTester implements ApplicationRunner {
                 "joey",
                 "lau",
                 "123 Main Street",
-                true,
-                LocalDateTime.now()
+                "0987654321"
         ));
 
         itemRepository.save(new ItemEntity(
