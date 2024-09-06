@@ -56,7 +56,7 @@ public class ItemService {
     }
 
     public List<ItemDto> searchItemsByName(String query) {
-        return itemRepository.findAllByNameContaining(query)
+        return itemRepository.findAllByNameContainingIgnoreCase(query)
                 .stream()
                 .filter(item -> item.getStatus() == ItemStatusEnum.AVAILABLE)
                 .map(ItemDto::new)

@@ -20,7 +20,7 @@ public interface ItemRepository extends JpaRepository<ItemEntity, UUID> {
 
     List<ItemEntity> findAllByUserId(UUID userId);
 
-    List<ItemEntity> findAllByNameContaining(String name);
+    List<ItemEntity> findAllByNameContainingIgnoreCase(String name);
 
     List<ItemEntity> findAllByStatus(ItemStatusEnum statusEnum);
 
