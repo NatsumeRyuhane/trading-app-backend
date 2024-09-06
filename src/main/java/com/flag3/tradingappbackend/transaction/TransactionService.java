@@ -123,4 +123,16 @@ public class TransactionService {
         transactionRepository.updateBuyerToSellerRating(id, rating);
     }
 
+    public TransactionDto getActiveTransactionByItemId(UUID itemId) {
+        List<TransactionEntity> transactions = transactionRepository.findAllByItemId(itemId);
+        List<TransactionDto> activeTransactions = transactions.stream()
+                .filter(transaction -> transaction.getStatus() != TransactionStatusEnum.CANCELED)
+                .map(TransactionDto::new)
+                .toList();
+
+        if (activeTransactions.isEmpty()) {
+            throw new AssetDoesNotExistException("Transaction associated with item " + itemId);
+        }
+        return activeTransactions.get(0);
+    }
 }

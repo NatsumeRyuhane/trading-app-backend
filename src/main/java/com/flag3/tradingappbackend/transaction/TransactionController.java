@@ -54,6 +54,11 @@ public class TransactionController {
         return transactionService.getTransactionsByItemId(itemId);
     }
 
+    @GetMapping
+    public TransactionDto getActiveTransactionByItemId(@RequestParam UUID itemId) {
+        return transactionService.getActiveTransactionByItemId(itemId);
+    }
+
     @GetMapping("/status/{status}")
     public List<TransactionDto> getTransactionsByStatus(@PathVariable TransactionStatusEnum status) {
         return transactionService.getTransactionsByStatus(status);
