@@ -10,14 +10,11 @@ import com.flag3.tradingappbackend.db.enums.ItemCategoryEnum;
 import com.flag3.tradingappbackend.db.enums.ItemStatusEnum;
 import com.flag3.tradingappbackend.db.enums.TransactionStatusEnum;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -64,6 +61,18 @@ public class DevelopmentTester implements ApplicationRunner {
                 List.of("https://images.unsplash.com/photo-1640003145136-f998284e11de?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fG1hdHRyZXNzfGVufDB8fDB8fHww"),
                 ItemStatusEnum.ONGOING_TRADE,
                 ItemCategoryEnum.BEDDING,
+                "123 Main Street"
+        ));
+
+        itemRepository.save(new ItemEntity(
+                UUID.randomUUID(),
+                stevenUuid,
+                "Desktop Lamp",
+                20,
+                "Desktop lamp with a convenient USB socket",
+                List.of("https://img5.su-cdn.com/cdn-cgi/image/width=750,height=750/mall/file/2022/09/21/854afde5554f54b4c55587c389ef04b9.jpg", "https://www.sofary.com/cdn/shop/files/4_586cc78d-5fb3-49e6-a881-5eace633b4d6.jpg?v=1683624701&width=1200"),
+                ItemStatusEnum.AVAILABLE,
+                ItemCategoryEnum.LIGHTING,
                 "123 Main Street"
         ));
 
@@ -116,7 +125,7 @@ public class DevelopmentTester implements ApplicationRunner {
                 joeyUuid,
                 "Frying Pan",
                 50,
-                "Brand new non-stick frying pan",
+                "Brand new non-stick frying pan good for anything",
                 List.of("https://plus.unsplash.com/premium_photo-1672419800149-d04c372c5113?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cGFufGVufDB8fDB8fHww"),
                 ItemStatusEnum.AVAILABLE,
                 ItemCategoryEnum.KITCHEN,
@@ -168,6 +177,18 @@ public class DevelopmentTester implements ApplicationRunner {
                 List.of("https://images.unsplash.com/photo-1512212621149-107ffe572d2f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c29mYXxlbnwwfHwwfHx8MA%3D%3D"),
                 ItemStatusEnum.AVAILABLE,
                 ItemCategoryEnum.FURNITURE,
+                "123 Main Street"
+        ));
+
+        itemRepository.save(new ItemEntity(
+                UUID.randomUUID(),
+                stevenUuid,
+                "Home Shelf",
+                35,
+                "Shelf bought three months ago, great for organizing",
+                List.of("https://i5.walmartimages.com/seo/Mainstays-5-Shelf-Bookcase-with-Adjustable-Shelves-White_4fc187dc-9c50-4dd8-a636-3e659ab74799.6f15f74ae9951e69d39329b5e161e35a.png?odnHeight=768&odnWidth=768&odnBg=FFFFFF"),
+                ItemStatusEnum.AVAILABLE,
+                ItemCategoryEnum.ORGANIZING,
                 "123 Main Street"
         ));
 
