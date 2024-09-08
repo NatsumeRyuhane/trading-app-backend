@@ -1,6 +1,7 @@
 package com.flag3.tradingappbackend.item;
 
 import com.flag3.tradingappbackend.db.ItemRepository;
+import com.flag3.tradingappbackend.db.UserRepository;
 import com.flag3.tradingappbackend.db.dto.ItemDto;
 import com.flag3.tradingappbackend.db.entity.ItemEntity;
 import com.flag3.tradingappbackend.db.entity.UserEntity;
@@ -21,6 +22,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ItemService {
 
+    private final UserRepository userRepository;
     private final ItemRepository itemRepository;
     private final MediaStorageService mediaStorageService;
 
@@ -84,6 +86,12 @@ public class ItemService {
                 .filter(file -> !file.isEmpty())
                 .map(mediaStorageService::upload)
                 .toList();
+
+        if (address == null) {
+            UserEntity user = userRepository.findById(userId)
+                    .orElseThrow(() -> new AssetDoesNotExistException("User with id " + userId));
+            address = user.getAddress();
+        }
 
         ItemEntity itemEntity = new ItemEntity(
                 UUID.randomUUID(),
